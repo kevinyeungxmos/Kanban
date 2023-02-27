@@ -60,7 +60,6 @@ const App = () => {
     }
 
     const addTask = (title) => {
-        console.log("added");
         const copyLists = { ...lists };
         const new_task = {
             title: "new task",
@@ -69,7 +68,13 @@ const App = () => {
         };
         copyLists[title].items.push(new_task);
         setLists(copyLists)
-    }
+    };
+
+    const delTask = (title, index) => {
+        const copyLists = { ...lists };
+        copyLists[title].items.splice(index,1);
+        setLists(copyLists)
+    };
 
     const updateComment = (evt) => {
         evt.preventDefault();
@@ -146,6 +151,7 @@ const App = () => {
                                             <div>
                                                 <p>{item.title}</p>
                                                 <p>Comment: {item.comments}</p>
+                                                <button className="btn_delTask" onClick={()=>{delTask(list[1].title,index)}}>Delete</button>
                                                 <button type="submit" className="btn_comment" onClick={()=>{btn_c(list[1].title, index)}}>EDIT</button>
                                             </div>)
                                     }
@@ -165,7 +171,7 @@ const App = () => {
                                 })()}
                             </div>
                         ))}
-                        <button onClick={()=>{addTask(list[1].title)}}>Add Task</button>
+                        <button className="btn_addTask" onClick={()=>{addTask(list[1].title)}}>Add Task</button>
                     </div>
                 </div>
             ))}
