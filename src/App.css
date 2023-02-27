@@ -11,7 +11,7 @@
 .InProgress_wrapper,
 .Done_wrapper {
 	width: 32%;
-	min-height: 60vh;
+	min-height: 90vh;
 	display: flex;
 	flex-direction: column;
 	padding: 5px;
@@ -62,7 +62,7 @@
 .InProgress_container,
 .Done_container {
 	width: 100%;
-	min-height: 55vh;
+	min-height: 80vh;
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
@@ -77,4 +77,19 @@
 	border-radius: 5px;
 	margin-bottom: 10px;
 	padding: 15px;
+}
+
+.btn_comment{
+	border-style: none;
+	background:none;
+	outline:none;
+	margin-left: 90%;
+}
+
+.btn_comment:hover{
+	color: white;
+}
+
+.ToDo_text{
+	background: #eee3cb;
 }

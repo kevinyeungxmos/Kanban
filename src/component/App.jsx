@@ -12,6 +12,7 @@ const App = () => {
                 {
                     title: "task 1",
                     comments: "Description of task 1",
+                    edit : false,
                 },
             ],
         },
@@ -21,14 +22,17 @@ const App = () => {
                 {
                     title: "task 2",
                     comments: "Description of task 2",
+                    edit : false,
                 },
                 {
                     title: "task 3",
                     comments: "Description of task 3",
+                    edit : false,
                 },
                 {
                     title: "task 4",
                     comments: "Description of task 4",
+                    edit : false,
                 },
             ],
         },
@@ -38,10 +42,44 @@ const App = () => {
                 {
                     title: "task 5",
                     comments: "Description of task 5",
+                    edit : false,
                 },
             ],
         },
     });
+
+    const btn_c = (title, index) => {
+        const copyLists = { ...lists };
+        if (!copyLists[title].items[index].edit){
+            copyLists[title].items[index].edit = true;
+        }
+        else{
+            copyLists[title].items[index].edit = false;
+        }
+        setLists(copyLists);
+    }
+
+    const addTask = (title) => {
+        console.log("added");
+        const copyLists = { ...lists };
+        const new_task = {
+            title: "new task",
+            comments: "Description of new task",
+            edit : false,
+        };
+        copyLists[title].items.push(new_task);
+        setLists(copyLists)
+    }
+
+    const updateComment = (evt) => {
+        evt.preventDefault();
+        const copyLists = { ...lists };
+        let title = evt.target.getAttribute("data-title");
+        let index = evt.target.getAttribute("data-index");
+        copyLists[title].items[index].comments = evt.target.value;
+        setLists(copyLists);
+
+    }
 
     const dragStart = (e, col, position) => {
 
@@ -101,10 +139,33 @@ const App = () => {
                                 onDragEnd={drop}
                                 draggable
                             >
-                                <p>{item.title}</p>
-                                <p>Comment: {item.comments}</p>
+
+                                {(() => {
+                                    if(list[1].items[index].edit === false){
+                                        return (
+                                            <div>
+                                                <p>{item.title}</p>
+                                                <p>Comment: {item.comments}</p>
+                                                <button type="submit" className="btn_comment" onClick={()=>{btn_c(list[1].title, index)}}>EDIT</button>
+                                            </div>)
+                                    }
+                                    else{
+                                        return (
+                                            <div>
+                                                <textarea name="title_textbox" cols="30" rows="1" className={`${list[1].title}_text`}>
+                                                    {item.title}
+                                                </textarea>
+                                                <textarea name="comment_textbox" data-title={list[1].title} data-index={index}
+                                                className={`${list[1].title}_text`} onChange={updateComment} cols="30" rows="2">
+                                                    {item.comments}
+                                                </textarea>
+                                                <button type="submit" className="btn_comment" onClick={()=>{btn_c(list[1].title, index)}}>Submit</button>
+                                            </div>)
+                                    }
+                                })()}
                             </div>
                         ))}
+                        <button onClick={()=>{addTask(list[1].title)}}>Add Task</button>
                     </div>
                 </div>
             ))}
