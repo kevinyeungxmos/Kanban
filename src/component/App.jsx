@@ -67,13 +67,13 @@ const App = () => {
             edit : false,
         };
         copyLists[title].items.push(new_task);
-        setLists(copyLists)
+        setLists(copyLists);
     };
 
     const delTask = (title, index) => {
         const copyLists = { ...lists };
         copyLists[title].items.splice(index,1);
-        setLists(copyLists)
+        setLists(copyLists);
     };
 
     const updateComment = (evt) => {
@@ -83,8 +83,16 @@ const App = () => {
         let index = evt.target.getAttribute("data-index");
         copyLists[title].items[index].comments = evt.target.value;
         setLists(copyLists);
+    };
 
-    }
+    const updateTitle = (evt) => {
+        evt.preventDefault();
+        const copyLists = { ...lists };
+        let title = evt.target.getAttribute("data-title");
+        let index = evt.target.getAttribute("data-index");
+        copyLists[title].items[index].title = evt.target.value;
+        setLists(copyLists);
+    };
 
     const dragStart = (e, col, position) => {
 
@@ -158,7 +166,8 @@ const App = () => {
                                     else{
                                         return (
                                             <div>
-                                                <textarea name="title_textbox" cols="30" rows="1" className={`${list[1].title}_text`}>
+                                                <textarea name="title_textbox" cols="30" rows="1" data-title={list[1].title} data-index={index} 
+                                                onChange={updateTitle} className={`${list[1].title}_text`}>
                                                     {item.title}
                                                 </textarea>
                                                 <textarea name="comment_textbox" data-title={list[1].title} data-index={index}
